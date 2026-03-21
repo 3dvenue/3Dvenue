@@ -44,7 +44,7 @@
 
 - **This is not just a modification of what exists, but the enrichment of the soil of the 3D Web.** (これは3D Webという土壌そのものを豊かにし、人類の可能性を次の一歩へと押し進めるための「進化の始まり」であると、私は確信している。)
   
-  ---
+---
   
 ### **5. MIT License — Legal Terms | ライセンス（法的説明）**
 
