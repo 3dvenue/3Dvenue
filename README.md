@@ -46,7 +46,7 @@
   
   ---
   
-  ### **5. MIT License — Legal Terms | ライセンス（法的説明）**
+### **5. MIT License — Legal Terms | ライセンス（法的説明）**
 
 **This software is released under the MIT License. You are free to use, modify, and distribute it, even for commercial purposes, provided that the copyright notice and this permission notice are included.**
 （このソフトウェアはMITライセンスのもとで公開されています。著作権表示および本許諾表示を記載することを条件に、商用利用を含め、自由に使用、改変、配布を行うことができます。）
