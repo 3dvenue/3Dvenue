@@ -43,10 +43,23 @@
 - **I sincerely hope this "seed" becomes the starting point for new ideas beyond my imagination.** (この「種」が起点となり、私の想像すら及ばないような新しいアイデアへと展開することを切に願う。)
 
 - **This is not just a modification of what exists, but the enrichment of the soil of the 3D Web.** (これは3D Webという土壌そのものを豊かにし、人類の可能性を次の一歩へと押し進めるための「進化の始まり」であると、私は確信している。)
+  
+  ---
+  
+  ### **5. MIT License — Legal Terms | ライセンス（法的説明）**
+
+**This software is released under the MIT License. You are free to use, modify, and distribute it, even for commercial purposes, provided that the copyright notice and this permission notice are included.**
+（このソフトウェアはMITライセンスのもとで公開されています。著作権表示および本許諾表示を記載することを条件に、商用利用を含め、自由に使用、改変、配布を行うことができます。）
+
+**For the full text of the license, please refer to the LICENSE file included in this repository.**
+（ライセンスの全文については、本リポジトリに含まれるLICENSEファイルをご参照ください。）
+
+**"Logic is weightless. Strip away the engine, and only dozens of kilobytes of pure intent remain. Like DNS, MIDI, and TRON—the smaller the code, the closer it is to the truth."**
+（論理に重さはない。エンジンを除けば、そこには数十KBの純粋な意志だけが残る。DNS、MIDI、TRONのように——コードが小さければ小さいほど、それは真理に近い。）
 
 ---
 
-### **5. A New Era of Sharing, Not Monopoly | 独占ではなく共有**
+### **6. A New Era of Sharing, Not Monopoly | 独占ではなく共有**
 
 - **"If Google fails to define the standards for Web 5.0, another pioneer surely will."** (もしGoogleがこの指標を示さないのであれば、他の誰かがその役割を担うことになるだろう。)
 
@@ -248,14 +261,3 @@ $password = "Password";
 
 ---
 
-## 6. MIT License / ライセンス（MIT License）
-
-**This software is released under the MIT License. You are free to use, modify, and distribute it, even for commercial purposes, provided that the copyright notice and this permission notice are included.**
-（このソフトウェアはMITライセンスのもとで公開されています。著作権表示および本許諾表示を記載することを条件に、商用利用を含め、自由に使用、改変、配布を行うことができます。）
-
-**For the full text of the license, please refer to the LICENSE file included in this repository.**
-（ライセンスの全文については、本リポジトリに含まれるLICENSEファイルをご参照ください。）
-
-
-
-**"Logic is weightless. Strip away the engine, and only dozens of kilobytes of pure intent remain. Like DNS, MIDI, and TRON—the smaller the code, the closer it is to the truth."** （論理に重さはない。エンジンを除けば、そこには数十KBの純粋な意志だけが残る。DNS、MIDI、TRONのように——コードが小さければ小さいほど、それは真理に近い。）
