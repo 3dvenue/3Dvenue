@@ -261,3 +261,9 @@ $password = "Password";
 
 ---
 
+## 🛠 System Design
+詳細な設計仕様については、以下のドキュメントを参照してください。
+
+* [Database Schema](./Database%20Schema.md) - DB構造・テーブル定義
+* [Project Structure](./Project%20Structure.md) - ディレクトリ構成・ファイル役割
+
