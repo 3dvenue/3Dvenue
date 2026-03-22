@@ -74,7 +74,7 @@ $_SESSION['expoid'] = $id;
         $oname = $row['oname'];
 
         if(!$background == ''){
-            $bgstyle = 'style="background-image:url(../expo/img/'.$id.'.'.$background.')"';
+            $bgstyle = 'style="background-image:url(../../expo/img/'.$id.'.'.$background.')"';
         }
 
     }else{
