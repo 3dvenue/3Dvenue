@@ -1,5 +1,7 @@
 ## 1. Mission: Uniting the Power of Individuals / プロジェクトの使命（「個の力」を集結させる思想）
 
+* [Database Schema](https://github.com/3dvenue/3Dvenue-mit-jp) - for Japanese
+
 ###  1. Our Mission | コンセプト
 
 - **3D: Digital, Dream, Deliver**
