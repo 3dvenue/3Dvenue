@@ -268,3 +268,6 @@ $password = "Password";
 * [Project Structure](./Project%20Structure.md) - ディレクトリ構成・ファイル役割
 * [Developer Profile](https://3dvenue.github.io/3Dvenue/profile/index.html) - 開発者プロフィール
 
+---
+### 💡 Postscript (A little story)
+I tried to share **3DVenue** on Hacker News today to celebrate the release, but the "gatekeeper" (automated system) kicked me out because my account is too new! (lol) 
