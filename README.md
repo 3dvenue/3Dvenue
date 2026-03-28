@@ -249,7 +249,7 @@ $password = "Password";
 
 - **Go to the exhibition booth editing screen, complete the input, and create a banner. Once you press "Open," the exhibition will be ready to go live. Prospective exhibitors can apply for the exhibition via the forms displayed on their respective pages. Similarly, exhibitors will not be displayed in the venue unless they create an "Exhibitor Card."** (※出展ブースの編集画面に行き、入力が終わったら、バナーの作成を行い。Openを押した時点で、展示会が開催できるようになります。出店希望者は、それぞれのページに表示される、展示会に申込みをする形で出店が可能になります。出展者もまた、出展カードを作らないと展示会場には表示されません。)
 
-- **We hope you will get a feel for this through the testing process. As the user base grows, we hope to see more people creating usage guides and videos. Regarding basic operating procedures, we also plan to provide explanations on the official page at [https://mit.3dvenue.jp/](https://mit.3dvenue.jp/) as the number of users increases.** (※これはテスト作業を通じて感覚で覚えて頂ければと思います。利用者が増えてきたら、使い方などのページや動画を作ってくれる方が出てきてくれると嬉しいです。基本的な操作方法については、いずれ利用者が増えてきた段階で、公式ページ [https://mit.3dvenue.jp/](https://mit.3dvenue.jp/) でも解説をさせていただこうと考えています。)
+- **We hope you will get a feel for this through the testing process. As the user base grows, we hope to see more people creating usage guides and videos. Regarding basic operating procedures, we also plan to provide explanations on the official page at [https://mit.3dvenue.net/](https://mit.3dvenue.net/) as the number of users increases.** (※これはテスト作業を通じて感覚で覚えて頂ければと思います。利用者が増えてきたら、使い方などのページや動画を作ってくれる方が出てきてくれると嬉しいです。基本的な操作方法については、いずれ利用者が増えてきた段階で、公式ページ [https://mit.3dvenue.net/](https://mit.3dvenue.net/) でも解説をさせていただこうと考えています。)
 
 ## 5. Collaborative Attraction Model (Project Exit Strategy) / 共同集客のモデル（プロジェクトの出口戦略）
 
