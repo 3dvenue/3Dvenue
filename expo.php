@@ -31,24 +31,25 @@ require_once "./config.php";
 <div class="inner">
 <section id="venue">
 <h2>Current Exhibitions</h2>
-<ul id="venues">
-<?php
-    $sql = "SELECT * FROM venue WHERE CURRENT_DATE BETWEEN start AND end AND public = 1 ORDER BY id DESC";
-    $vanues = [];
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $values = $result->fetch_all(MYSQLI_ASSOC);
-    foreach ($values as $row) {
-        $id = $row['id'];
-        $name = $row['name'];
-?>
-<li data-id="<?=$id?>">
-    <figure>
-        <img src="./expo/img/bana<?=$id?>.png" alt="<?=$name?>">
-    </figure>
-</li>
-<?php } ?>
+	<ul id="venues">
+	<?php
+	    $sql = "SELECT * FROM venue WHERE CURRENT_DATE BETWEEN start AND end AND public = 1 ORDER BY id DESC";
+	    $vanues = [];
+	    $stmt = $conn->prepare($sql);
+	    $stmt->execute();
+	    $result = $stmt->get_result();
+	    $values = $result->fetch_all(MYSQLI_ASSOC);
+	    foreach ($values as $row) {
+	        $id = $row['id'];
+	        $name = $row['name'];
+	?>
+	<li data-id="<?=$id?>">
+	    <figure>
+	        <img src="./que/<?=$id?>/bana.webp" alt="<?=$name?>">
+	    </figure>
+	</li>
+	<?php } ?>
+    </ul>
 </section>
 </div>
 </main>
@@ -79,4 +80,5 @@ $(function(){
 
 });
 </script>
-
+</body>
+</html>

@@ -19,7 +19,7 @@ require_once "./config.php";
     <link rel="stylesheet" type="text/css" href="./common/css/style.css">
     <link rel="stylesheet" type="text/css" href="./common/css/index.css">
     <link rel="icon" href="./favicon.ico">
-    <title>3DVenue MIT License</title>
+    <title>3DVenue: Open Source Virtual Exhibit Engine (MIT Licensed)</title>
 <style type="text/css">
 </style>
 
@@ -42,7 +42,7 @@ require_once "./config.php";
         </div>
         <div id="eycatchCenter">
         <a href="acount.php">Exhibitor Registration</a>
-        <a href="./expo/1/" target="_blank">View Demo Exhibition</a>
+        <a href="https://github.com/3dvenue/3Dvenue-mit-jp" target="_blank">Clone from GitHub</a>
         </div>
      </div>
 </div>
@@ -74,8 +74,8 @@ require_once "./config.php";
 <section id="content">
     <h2>Content</h2>
     <div id="features">
-        <div><figure><a href="about.php"><img src="./img/about.png" alt="3DVenueバーチャル展示会オンラインとは"></a></figure></div>
-        <div><figure><a href="expo.php"><img src="./img/exhibitors.png" alt="公開中の3DVenueバーチャル展示会"></a></figure></div>
+        <div><figure><a href="about.php"><img src="./img/about.webp" alt="About 3DVenue"></a></figure></div>
+        <div><figure><a href="expo.php"><img src="./img/exhibitors.webp" alt="3DVenue Virtual EXPO"></a></figure></div>
     </div>
 </section>
 
@@ -95,7 +95,7 @@ require_once "./config.php";
             while ($row = $result->fetch_assoc()) {
             $id = $row['id'];
         ?>
-        <li><figure><a href="./expo/<?=$id?>" target="_blank"><img src="./expo/img/bana<?=$id?>.png"></a></figure></li>
+        <li><figure><a href="./expo/<?=$id?>/" target="_blank"><img src="./que/<?=$id?>/bana.webp"></a></figure></li>
         <?php } ?>
         </ul>
         </div>
