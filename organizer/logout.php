@@ -8,8 +8,8 @@
 */
 
 session_start();
-$_SESSION = array();
-session_destroy();
+unset($_SESSION['oid']);
+unset($_SESSION['comapny_name']);
 header("Location: ./");
 exit;
 ?>

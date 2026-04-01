@@ -8,8 +8,8 @@
 */
 include_once "auth.php";
 $name = $_POST['name'] ?? null;
-$color = $_POST['color'] ?? null;
-$id = $_POST['id'] ?? null;
+$color = mysqli_real_escape_string($conn, $_POST['color'] ?? '');
+$id    = (int)($_POST['id'] ?? 0);
 
 // ID と color の存在チェック
 if ($id === null || $name === null || $color === null) {
@@ -23,7 +23,7 @@ if (!preg_match('/^#[0-9A-Fa-f]{6}$/', $color)) {
 }
 
 // DB 接続
-include_once "../config.php"; // 例：PDO を返すファイル
+include_once "../config.php";
 
 $sql = "UPDATE venue SET $name = '$color' WHERE id = '$id'";
 $stmt = $conn->prepare($sql);

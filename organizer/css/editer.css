@@ -94,23 +94,6 @@ header{
 	padding-left:20px;
 }
 
-#editor #form .close{
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width:40px;
-	height:40px;
-	background:#333;
-	color:#FFF;
-	font-weight:780;
-	position: absolute;
-	top:0px;
-	right:0px;
-	padding:0;
-	margin:0;
-	cursor: pointer;
-}
-
 #editor #form input[type="text"],
 #editor #form textarea{
 	padding:10px;
@@ -134,6 +117,17 @@ header{
 
 #editor #form div{
 	display: none;
+}
+
+#editor #form .close{
+	background:#333;
+	color:#FFF;
+	position: absolute;
+	top:0px;
+	right:0px;
+	display: flex;
+	width:40px;
+	height:40px;
 }
 
 #editor #form.category #category,
@@ -165,15 +159,12 @@ header{
 	margin:0;
 }
 
-#editor #form div#category_btn.edit .edit{
+#editor #form div#category_btn.edit .edit,
+#editor #form div#category_btn.edit .dell{
 	display:block;
 }
 
 #editor #form div#category_btn.new .save{
-	display:block;
-}
-
-#editor #form div#category_btn.c0 .dell{
 	display:block;
 }
 
@@ -233,15 +224,6 @@ body.colorbar{
 	position:absolute;
 	top:10px;
 	right:10px;
-	width:30px;
-	height:30px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background:#FFF;
-	color:#000;
-	font-weight:700;
-	cursor: pointer;
 }
 
 #colorbar form{
@@ -261,10 +243,6 @@ body.colorbar{
 	font-size:12px;
 }
 
-/*#editor #form.period .box{
-	display: none;
-}
-*/
 dl{
 	display: flex;
 	flex-wrap: wrap;

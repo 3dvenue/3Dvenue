@@ -57,11 +57,6 @@ if($row){
     <link rel="stylesheet" type="text/css" href="./css/acount.css?t=<?=time()?>">
     <link rel="icon" href="../favicon.ico">
     <title>My Account</title>
-<style type="text/css">
-table{
-
-}
-</style>
 </head>
 <body class="acount">
 <?php include_once 'header.php'; ?>
@@ -89,6 +84,5 @@ table{
 </div>
 </main>
 <?php include_once 'footer.php'; ?>
-</script>
 </body>
 </html>

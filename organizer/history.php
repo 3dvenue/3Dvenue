@@ -56,10 +56,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $end = $row['end'];
             $organizer = $row['organizer'];
             $public = "OK";
-            $imagePath = '../expo/img/bana'.$id.'.png';
+
+            $imagePath = '../que/'.$id.'/bana.webp';
             if (!file_exists($imagePath)) {
             $public = "NG";
-            $imagePath = '../expo/img/nobana.png';
+             $imagePath = '../que/nobana.webp';
+            }
+
+            $logpath = '../que/'.$id.'/access.log';
+            if (!file_exists($logpath)) {
+                touch($logpath);
+                chmod($logpath, 0666);
             }
 
             $lines = file('../expo/'.$id.'/access.log');

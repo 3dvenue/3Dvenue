@@ -7,7 +7,7 @@
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
 <meta http-equiv="expires" content="0">
-<link rel=”icon” href=“/favicon.ico”>
+<link rel="icon" href="/favicon.ico">
 <link rel="stylesheet" type="text/css" href="../common/css/base.css">
 <title>
 Organizer

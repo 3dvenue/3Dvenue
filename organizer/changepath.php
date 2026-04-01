@@ -34,8 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" type="text/css" href="./css/changepath.css">
     <link rel="icon" href="../favicon.ico">
     <title>Change Password</title>
-<style type="text/css">
-</style>
+
 
 </head>
 <body>
@@ -48,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <p class="japan">
     パスワードには漢字やひらがな、全角カナ、記号などが利用可能です。<br />
     あなたが覚えておきやすい組み合わせで入力可能になります。<br />
-    例）古田係長（５４歳）通称：TAKO　なんでタコやねん！<br />
+    例）古田係長（５４歳）通称：TAKO なんでタコやねん！<br />
     この組み合わせなら脅威と言われている量子コンピュータを使っても解読できません。
 </p>
 <p class="english">

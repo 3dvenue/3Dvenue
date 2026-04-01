@@ -11,8 +11,8 @@ include_once "auth.php";
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
   $id = $_GET['i'];
 
-$venueLogPath = '../expo/'.$id.'/venue.log';
-$accessLogPath = '../expo/'.$id.'/access.log';
+$venueLogPath = '../que/'.$id.'/venue.log';
+$accessLogPath = '../que/'.$id.'/access.log';
 
 $venue = [];
 $access = [];
@@ -30,7 +30,6 @@ function parseLog($logLines) {
     $hourly = [];
 
     foreach ($logLines as $line) {
-        // "2026-02-17 03:42:06 153.240.198.6"
         $parts = explode(' ', $line);
         if (count($parts) < 2) continue;
 

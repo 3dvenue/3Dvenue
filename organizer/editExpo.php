@@ -19,29 +19,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     switch ($name) {
 
         case 'name':
-            $text = $_POST['text'];
+        $text = mysqli_real_escape_string($conn, $_POST['text'] ?? '');
             break; 
 
         case 'subtitle': 
-            $text = $_POST['text'];
+        $text = mysqli_real_escape_string($conn, $_POST['text'] ?? '');
             break; 
 
         case 'period': 
-            $start = $_POST['start'];
-            $end = $_POST['end'];
+            $start = mysqli_real_escape_string($conn, $_POST['start'] ?? '');
+            $end   = mysqli_real_escape_string($conn, $_POST['end'] ?? '');
             break; 
 
         case 'organizers': 
-            $text = $_POST['text'];
+        $text = mysqli_real_escape_string($conn, $_POST['text'] ?? '');
             break; 
 
         case 'description': 
-            $text = $_POST['textarea'];
+        $text = mysqli_real_escape_string($conn, $_POST['textarea'] ?? '');
             break; 
 
         case 'benefit': 
-            $text = $_POST['textarea'];
-            break; 
+        $text = mysqli_real_escape_string($conn, $_POST['textarea'] ?? '');
+            break;
     }
 
     if($name == 'period'){
@@ -51,16 +51,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: editExpo.php?id=$id");
         exit;
     }else{        
-        echo $name;
-        $sql = "UPDATE venue SET $name = '$text' WHERE id = '$id'";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        header("Location: editExpo.php?id=$id");
-        exit;
+        if($name != "category"){
+            $sql = "UPDATE venue SET $name = '$text' WHERE id = '$id'";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            header("Location: editExpo.php?id=$id");
+            exit;
+        }
     }
 
     echo $submit = $_POST['submit'];
-    exit;
 
     if($name == 'category'){
         $submit = $_POST['submit'];
@@ -105,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         exit;
     }
 
-    $id = $_GET['id'];
+    $id = (int)($_GET['id'] ?? 0);
     $sql = "SELECT * FROM venue WHERE id = '$id'";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
@@ -130,6 +130,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $benefit_list = explode("\n", $benefit);
         $categories = explode(',', $category);
 
+        $h1len = 90 / mb_strlen($name);
+        $h2len = 80 / mb_strlen($subtitle);
+ 
         $background = $row['background'];
         $maincolor = $row['maincolor'];
         $ptext = $row['ptext'];
@@ -141,8 +144,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $h2text = $row['h2text'];
         $organizers = $row['organizers'];
 
-        if(!$background == ''){
-            $bgstyle = 'style="background:url(../expo/img/'.$id.'.'.$background.')"';
+        $toppath = '../que/'.$id.'/top.webp';
+        $bgstyle = "";
+        if (file_exists($toppath)) {
+            $bgstyle = 'style="background:url(../que/'.$id.'/top.webp?t='.time().')"';
         }
 
     }else{
@@ -168,6 +173,17 @@ header{
     color:<?=$headertext?>;
 }
 
+#eyecatch h1{
+    font-size:clamp(30px, <?=$h1len?>vw, 50px);
+}
+
+#eyecatch h2{
+    font-size:clamp(20px, <?=$h2len?>vw, 30px);
+}
+
+#eyecatch #period span{
+    font-size:clamp(18px, 3vw, 24px);
+} 
 main section h2{
     background-color:<?=$h2color?>;
     color:<?=$h2text?>;
@@ -191,6 +207,7 @@ main p{
 </head>
 <body>
 <div id="banaArea">
+    <div class="close">&times;</div>
     <div id="result"></div>
     <button id="save" class="btn">Save</button>
 </div>
@@ -546,8 +563,9 @@ $(function(){
     }
 
 
-    $('#background').on('click',function(){
-
+    $('#banaArea .close').on('click',function(){
+        $('#result').empty();
+        $('#banaArea').removeClass();
     })
 
     $('#makebana').on('click', function () {

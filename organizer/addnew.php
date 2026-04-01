@@ -20,12 +20,12 @@ $end = date('Y-m-d', strtotime('+37 days')); // 1か月後
 $sql = "INSERT INTO venue (name,subtitle,description,start,end,organizer) VALUES (?,?,?,?,?,?)";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param('sssssi',$name ,$subtitle ,$description ,$start ,$end ,$oid);
-// $stmt->execute();
+
 if ($stmt->execute()) {
-    // 1. 直前に生成された AUTO_INCREMENT の ID を取得
+
     $newId = $conn->insert_id;
 
-    $dirPath = '../expo/' . $newId;
+    $dirPath = '../que/' . $newId;
     if (!is_dir($dirPath)) {
         mkdir($dirPath, 0777, true);
         chmod($dirPath, 0777);
