@@ -1,0 +1,18 @@
+# ---------------------------------------------------------
+# 3Dvenue - Exhibition Routing Configuration
+# ---------------------------------------------------------
+
+RewriteEngine On
+
+# 1. Skip rewriting if the requested path is an existing file or directory
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# 2. Security: Block direct access to "index.php?i=xxx" from external requests
+# (Returns 404 to force the use of clean URLs like /expo/1/)
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s/index\.php\?i= [NC]
+RewriteRule ^index\.php$ - [R=404,L]
+
+# 3. Internal Redirect: Rewrite "/expo/1/" to "index.php?i=1"
+# (This must come after the security rule above)
+RewriteRule ^([0-9]+)/?$ index.php?i=$1 [L]
