@@ -52,9 +52,9 @@ require_once "../config.php";
         $start = $row['start'];
         $end = $row['end'];
         $organizer = $row['organizer'];
-        $imagePath = '../expo/img/bana'.$id.'.png';
+        $imagePath = '../que/'.$id.'/bana.webp';
         if (!file_exists($imagePath)) {
-        $imagePath = '../expo/img/nobana.png';
+        $imagePath = '../que/nobana.webp';
         }
 ?>
 <div class="expo">

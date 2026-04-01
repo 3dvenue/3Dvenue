@@ -44,7 +44,7 @@ $id = 0;
 $name = "";
 
 if (isset($_GET['oid']) && is_numeric($_GET['oid'])) {
-    $oid = $_GET['oid'];
+    $oid = (int)($_GET['oid'] ?? 0);
     $name = "(".$_GET['name'].")";
     $organizer = "organizer";
 }
@@ -75,7 +75,7 @@ if (isset($_GET['oid']) && is_numeric($_GET['oid'])) {
 
 <section id="organizer">
 <button id="add" class="button">+</button>
-<h3>Organizer</h3>
+<h3>Organizer <a class="btn" href="../organizer/" target="_organizer">Open Organizer</a></h3>
 <table>
     <tr>
         <th>Organization Name</th>
@@ -164,6 +164,7 @@ if (isset($_GET['oid']) && is_numeric($_GET['oid'])) {
             $('#frame iframe').attr('src','jump_organizer.php?o=' + oid + '&c='+cname);
             $('#frame').addClass('active');
             $('#companyedit').removeClass();
+            $('#organizer').addClass('link');
         });
 
         $('#check .close').on('click',function(){

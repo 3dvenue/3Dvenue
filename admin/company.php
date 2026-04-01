@@ -17,8 +17,8 @@ $vname = "Companies";
 $title = "Companies";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $submit = $_POST['submit'];
-    $cid = $_POST['cid'];
+    $submit = $_POST['submit'] ?? ''; 
+    $cid = (INT)$_POST['cid'] ?? '0';
     switch ($submit) {
       case 'yes': 
             $sql = "UPDATE company SET status = 1 WHERE cid = '$cid'";
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 if (isset($_GET['vid']) && $_GET['vid'] !== "") {
-    $vid = $_GET['vid'];
+    $vid = (int)($_GET['vid'] ?? 0);
     $expo = "venue";
     $title = "Exhibitors";
     
@@ -74,7 +74,7 @@ if (isset($_GET['vid']) && $_GET['vid'] !== "") {
     <h2><?=$title?></h2>
 <section id="companies">
 <span id="add">+</span>
-<h3><?=$vname?></h3>
+<h3><?=$vname?> <a class="btn" href="../mypage" target="_mypage">Open MyPage</a></h3>
 <div id="view"><span class="view">Ban</span></div>
 <table>
     <tr>
@@ -155,6 +155,7 @@ if (isset($_GET['vid']) && $_GET['vid'] !== "") {
             $('#frame iframe').attr('src','jump_mypage.php?id=' + id);
             $('#frame').addClass('active');
             $('#companyedit').removeClass();
+			$('#companies').addClass('link');
         });
 
         $('#add').on('click', function() {
@@ -168,10 +169,6 @@ if (isset($_GET['vid']) && $_GET['vid'] !== "") {
             $('#companyedit input').val('');
         });
 
-        $('#check .close').on('click',function(){
-            $('#companyedit').removeClass('active');
-            $('#companyedit input').val('');
-        });
 
         $('#companies table .setbox span').on('click',function(e){
             e.stopPropagation(); 

@@ -23,11 +23,11 @@ session_start();
     -- Concept by Yoshihiro Murai
 */
 
-$acount = "your@mailaddress.com";
-$password = "password";
+$acount = "Admin Acount";
+$password = "Admin Password";
 
 $title="Admin Login";
-$ipcheck = "127.0.8.1";
+$ipcheck = "127.0.0.1";
 $ip = $_SERVER['REMOTE_ADDR'];
 $input1 = "email";
 $input2 = "password";
@@ -42,28 +42,28 @@ if($ipcheck == $ip){
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // --- Sender Check (CSRF Prevention) ---
-    $referer = isset($_SERVER['HTTP_REFERER']) ? parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST) : '';
-    $serverName = $_SERVER['HTTP_HOST'];
+    // // --- Sender Check (CSRF Prevention) ---
+    // $referer = isset($_SERVER['HTTP_REFERER']) ? parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST) : '';
+    // $serverName = $_SERVER['HTTP_HOST'];
 
-    if ($referer !== $serverName) {
-        header("Location: login.php"); //Jump to fake page.
-        exit;
+    // if ($referer !== $serverName) {
+    //     header("Location: login.php"); //Jump to fake page.
+    //     exit;
+    // }
+
+    if (isset($_POST['password'])) {
+        $message = "Invalid email address or password.";
+        // echo "Error";
     }
-
-    // if (isset($_POST['password'])) {
-    //     $message = "Invalid email address or password.";
-    //     // echo "Error";
-    // }
-    // if (isset($_POST['acounttext']) && isset($_POST['text'])) {
-    //     if($_POST['acounttext'] === $acount && $_POST['text'] === $password){
-    //     require_once "../config.php";
-    //     // echo "Success";
-    //         $_SESSION['ADMIN_CHECK'] = "success";
-    //         header("Location: index.php");
-    //         exit;
-    //     }
-    // }
+    if (isset($_POST['acounttext']) && isset($_POST['text'])) {
+        if($_POST['acounttext'] === $acount && $_POST['text'] === $password){
+        require_once "../config.php";
+        // echo "Success";
+            $_SESSION['ADMIN_CHECK'] = "success";
+            header("Location: index.php");
+            exit;
+        }
+    }
 
     if (isset($_POST['acount']) && isset($_POST['password'])) {
         if($_POST['acount'] === $acount && $_POST['password'] === $password){
@@ -148,8 +148,8 @@ form label input{
 
     <div id="form">
         <form method="POST">
-            <label><span>Email：</span><input type="<?=$input1?>" name="acount" value="" placeholder="acount@example.com" <?=$required?>></label>
-            <label><span>password：</span><input type="<?=$input2?>" name="password" value="" placeholder="password" <?=$required?>></label>
+            <label><span>Email：</span><input type="<?=$input1?>" name="acount" value="<?=$input1?>" placeholder="acount@example.com" <?=$required?>></label>
+            <label><span>password：</span><input type="<?=$input2?>" name="password" value="<?=$input2?>" placeholder="password" <?=$required?>></label>
             <div id="message"><?=$message?></div>
             <div id="submitButton"><button type="submit" class="btn" name="submit" value="login">ログイン</button>
         </form>
