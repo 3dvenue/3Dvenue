@@ -9,7 +9,7 @@
 
 session_start();
 if (empty($_SESSION['expoid'])) {
-    header("Location: /index.php");
+    header("Location: ../index.php");
     exit;
 }else{
 	$id = $_SESSION['expoid'];
@@ -24,7 +24,7 @@ $logfile = "{$logDir}/" . 'venue.log';
 $log = date('Y-m-d H:i:s') . ' ' . $_SERVER['REMOTE_ADDR'] . "\n";
 file_put_contents($logfile, $log, FILE_APPEND);
 
-    $bana = "../expo/img/bana".$id.".png";
+    $bana = "../que/".$id."/bana.webp";
 
 	$sql = "SELECT * FROM venue WHERE id = ?";
 	$stmt = $conn->prepare($sql);
@@ -70,6 +70,22 @@ file_put_contents($logfile, $log, FILE_APPEND);
     $stmt->execute();
     $result = $stmt->get_result();
     $exhibitors = $result->fetch_all(MYSQLI_ASSOC);
+   	
+    $c1 = "#7BB4EE";
+    $c2 = "#0E3B5C";
+    $colorpath = '../que/'.$id.'/color';
+    if (file_exists($colorpath)) {
+        $colors = explode(',', trim(file_get_contents($colorpath)));
+        $c1 = $colors[0];
+        $c2 = $colors[1];
+    }
+
+    $background = "";
+    $bgpath = '../que/'.$id.'/bg.webp';
+    if (file_exists($bgpath)) {
+        $background = 'background-image:url('.$bgpath.');';
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -81,12 +97,20 @@ file_put_contents($logfile, $log, FILE_APPEND);
 <link rel="stylesheet" type="text/css" href="../expo/css/venue.css">
 <link rel="icon" href="../favicon.ico">
 <title>3D EXPO</title>
+<style>
+    body{
+        background:linear-gradient(<?=$c1?>,<?=$c2?>);
+    }
+
+    body .after{
+        <?=$background?>
+    }
+
+</style>
 </head>
 <body>
+<div class="after"></div>
 <canvas id="bg-canvas"></canvas>
-
-<!-- <div id="bana"><img src="<?=$bana?>"></div> -->
-
 <nav id="categories">
 <div class="inner">
 <ul>
@@ -109,9 +133,9 @@ file_put_contents($logfile, $log, FILE_APPEND);
 
 <div id="ev">
     <button id="down"><img src="../img/down.svg?t=1"></button>
-    <button id="right"><img src="../img/left.svg?t=1"></button>
+    <button id="left"><img src="../img/left.svg?t=1"></button>
     <button id="stop"><img src="../img/stop.svg?t=1"></button>
-    <button id="left"><img src="../img/right.svg?t=1"></button>
+    <button id="right"><img src="../img/right.svg?t=1"></button>
     <button id="up"><img src="../img/up.svg?t=1"></button>
 </div>
 
@@ -119,13 +143,13 @@ file_put_contents($logfile, $log, FILE_APPEND);
     <div id="boothBox">
         <div class="close">&times;</div>
         <div id="boothheader">
-            <div id="logo"><img src="" alt=""></div>
-            <div id="companyname"></div>
+            <div id="logo"><img src="" alt="Logo"></div>
+            <div id="companyname">Name</div>
         </div>
 
         <div id="boothmain">
             <h2 id="title">キャッチコピー</h2>
-            <figure><img id="image" src="" alt="LOGO"></figure>
+            <figure><img id="image" src="" alt="Image"></figure>
             <h3 id="subtitle">サブタイトル</h3>
             <div id="btnBox"><a href="" id="url" class="btn" target="_blank">Dive in</a></div>
             <div id="description">
@@ -148,7 +172,7 @@ file_put_contents($logfile, $log, FILE_APPEND);
 </div>
 
 <script src="../common/js/jquery.js"></script>
-<!-- Three.js 読み込み（後で中身を入れる） -->
+
 <script type="importmap">
 {
   "imports": {
@@ -165,7 +189,7 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { Reflector } from 'three/addons/objects/Reflector.js';
 
 const exhibitors = <?php echo json_encode($exhibitors, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG); ?>;
-// console.log(exhibitors); // ← jQueryでここから使える
+
 
 const mouse = new THREE.Vector2();
 const raycaster = new THREE.Raycaster();
@@ -173,7 +197,7 @@ const raycaster = new THREE.Raycaster();
 $(function(){
 
 const canvas = document.getElementById('bg-canvas');
-// const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+
 const renderer = new THREE.WebGLRenderer({
     canvas,
     antialias: true,
@@ -191,17 +215,12 @@ renderer.toneMappingExposure = 1.5;
 
 renderer.outputEncoding = THREE.sRGBEncoding;
 
-
-renderer.setSize(window.innerWidth, window.innerHeight);
-
 const scene = new THREE.Scene();
 
-// scene.background = new THREE.Color(0xFFFFFF);
-
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-// camera.position.set(0, 0.0, 2);
 
-/* 2026/02/27 */
+
+
 camera.position.set(0, 0.0, 0.1);
 
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -212,12 +231,11 @@ controls.update();
 controls.minDistance = 1;
 controls.maxDistance = 4;
 
-// const light = new THREE.AmbientLight(0x88aaff, 4.2);
+
 const light = new THREE.AmbientLight(0xCCCCCC, 2.5);
 scene.add(light);
 
-
-//  反射床追加
+//  Reflector
 const circleGeo = new THREE.CircleGeometry(10, 64);
 const reflector = new Reflector(circleGeo, {
     clipBias: 0.003,
@@ -230,7 +248,7 @@ reflector.position.set(0, -0.5, 0);
 reflector.name = "reflector";
 scene.add(reflector);
 
-//丸床追加
+//Circlefloor
 const circlefloor = new THREE.CircleGeometry(10, 64);
 const circleMat = new THREE.MeshStandardMaterial({
     color: 0x000000,
@@ -247,35 +265,30 @@ circle.position.set(0, -0.49, 0);  // Reflector と重ならないように少�
 circle.name = "floor";
 scene.add(circle);
 
-
-
 //EXPO bana add
-// const texture = new THREE.TextureLoader().load('<?=$bana?>');
 
 const loader = new THREE.TextureLoader();
 loader.load('<?=$bana?>', (texture) => {
 
-/* 20260227 */
-texture.colorSpace = THREE.SRGBColorSpace;
+	texture.colorSpace = THREE.SRGBColorSpace;
     texture.magFilter = THREE.LinearFilter;
     texture.minFilter = THREE.LinearMipmapLinearFilter;
     texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
     
-    // マテリアルに適用
+
     omaterial.map = texture;
     omaterial.needsUpdate = true;
 });
 
 const ogeometry = new THREE.PlaneGeometry(0.8 * 1.8, 0.8);
 const omaterial = new THREE.MeshBasicMaterial({ 
-    // map: texture,
+
     transparent: true,
     opacity:0
     });
 const bana = new THREE.Mesh(ogeometry, omaterial);
 
 bana.position.set(2.0,0.05,0);
-// bana.position.set(2.0, 0.05, 0.0);
 bana.rotation.y = Math.PI / 2; // 横向き（90°）
 bana.name = "bana";
 scene.add(bana);
@@ -315,30 +328,21 @@ function makePanel(id){
         const loader = new THREE.TextureLoader();
 
         const imgid = data.cid;
-        const url = '../expo/<?=$id?>/' + imgid + '.jpg';
+        const url = '../que/<?=$id?>/' + imgid + '.webp';
 
         loader.load(url, (LogoTexture) => {
-            // LogoTexture.encoding = THREE.sRGBEncoding;
-        // renderer.outputColorSpace = THREE.SRGBColorSpace;
-        // LogoTexture.colorSpace = THREE.sRGBEncoding;
         LogoTexture.colorSpace = THREE.SRGBColorSpace
         renderer.outputColorSpace = THREE.SRGBColorSpace;
-        /* 20260227 */
+
         LogoTexture.magFilter = THREE.LinearFilter;
         LogoTexture.minFilter = THREE.LinearMipmapLinearFilter;
         LogoTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
         LogoTexture.needsUpdate = true;
-
-            // ★ 画像のアスペクト比を取得
-            const imgWidth = LogoTexture.image.width;
-            const imgHeight = LogoTexture.image.height;
-            const imgAspect = imgWidth / imgHeight;
-
-            // ★ Plane の高さは固定、幅は画像比率で決定
+        
+            const imgAspect = LogoTexture.image.width / LogoTexture.image.height;
             const planeHeight = panelSize;
             const planeWidth = panelSize * imgAspect;
 
-            // ★ 画像比率に合わせた Plane を生成（歪まない）
             const geometry = new THREE.PlaneGeometry(planeWidth, planeHeight);
 
             const material = new THREE.MeshBasicMaterial({
@@ -348,32 +352,20 @@ function makePanel(id){
             });
 
             const mesh = new THREE.Mesh(geometry, material);
-
             const angleDeg = (i % 10) * 36 - 90;
-            // const angleDeg = (i % 10) * 36;
             const y = Math.floor(i / 10) * heightStep;
 
-            if (i % 10 === 0) {
-                floor++;
-            }
-
+            if (i % 10 === 0) floor++;
+            
             placePanel(mesh, angleDeg, y);
             mesh.lookAt(0, y, 0);
-            // mesh.visible = false;
             mesh.name = "card"+i;
             mesh.visible = true;
-            mesh.userData = {
-                cid:imgid,
-                y:y
-            };
-
+            mesh.userData = { cid:imgid, y:y };
             mesh.scale.set(1,1,1);
 
             scene.add(mesh);
-
             panelMeshes.push(mesh); // 削除用に配列に追加
-
-            // setTimeout(() => { mesh.visible = true; }, i * 10);
 
         });
 
@@ -413,34 +405,25 @@ $('#categories li').on('click',function(){
     makePanel(id);
 
     $('#ev').removeClass('under');
-
-    if(checkCount <= 9){
-        $('#ev').addClass('under');
-    }
+    if(checkCount <= 9) $('#ev').addClass('under');
 
 })
-
 
 let f = 0;
 
 $('#right').on('click',function(){
-    // controls.enabled = true; 
-    // controls.update();
 
     controls.autoRotate = true;
-    controls.autoRotateSpeed = 2.0; // 右回転
+    controls.autoRotateSpeed = 2.0;
 });
 
 $('#left').on('click',function(){
-    // controls.enabled = true; 
-    // controls.update();
 
     controls.autoRotate = true;
-    controls.autoRotateSpeed = -2.0; // 右回転
+    controls.autoRotateSpeed = -2.0;
 });
 
 $('#stop').on('click',function(){
-    // controls.reset();
     controls.autoRotate = false;
 })
 
@@ -448,7 +431,6 @@ $('#up').on('click',function(){
     if(f < (floor - 1)){
         f++;
         targetY = f * heightStep; 
-
     }
 })
 
@@ -459,7 +441,7 @@ $('#down').on('click',function(){
     }
 })
 
-// window.addEventListener('click', (event) => {
+
 $(window).on('click pointerdown', (event) => {
 
     if (event.target.id !== 'bg-canvas') return;
@@ -477,7 +459,7 @@ $(window).on('click pointerdown', (event) => {
         cardSet(cid);
         controls.autoRotate = false;
 
-        // Pop Up
+
         showPopup(obj.userData);
     }
 });
@@ -489,30 +471,20 @@ function cardSet(cid){
 
     const expo = exhibitors.find(item => item.cid == cid);
      if(expo){
-        let title = expo.title;
-        let subtitle = expo.subtitle;
-        let description = expo.description;
-        let url = expo.url;
-        let telno = expo.telno;
-        let company = expo.company;
-        let zip = expo.zip;
-        let prefecture = expo.prefecture;
-        let address1 = expo.address1;
-        let address2 = expo.address2;
-        let logo = expo.logo;
 
-        let logoimage = '../logo/' + cid + '.' + logo;
-        let img = '../expo/<?=$id?>/' + cid + '.jpg';
+        let logoimage = '../logo/' + cid + '.webp';
+        let img = '../que/<?=$id?>/' + cid + '.webp';
+
         $('#logo img').attr('src',logoimage);
         $('#image').attr('src',img);
-        $('#title').text(title);
-        $('#subtitle').text(subtitle);
-        $('#description p').text(description);
-        $('#company,#companyname').text(company);
-        $('#url').attr('href',url);
-        $('#zip span').text(zip);
-        $('#address').text(address1+", "+address2+", "+prefecture);
-        $('#telno span').text(telno);
+        $('#title').text(expo.title);
+        $('#subtitle').text(expo.subtitle);
+        $('#description p').text(expo.description);
+        $('#company,#companyname').text(expo.company);
+        $('#url').attr('href',expo.url);
+        $('#zip span').text(expo.zip);
+        $('#address').text(expo.address1 + ", " + expo.address2 + ", " + expo.prefecture);
+        $('#telno span').text(expo.telno);
         $('#booth').addClass('active');
         acid = cid;
         sendExhibitorLog(cid);
@@ -520,24 +492,16 @@ function cardSet(cid){
 }
 
 function sendExhibitorLog(cid) {
-    $.post(
-        './click.php', { exid: cid }) 
-        .fail(function () {
-    });
+    $.post('./click.php', { exid: cid }).fail(function () {});
 }
 
 $('#url').on('click',function(){
-    $.post(
-        './access.php', { exid: acid }) 
-        .fail(function () {
-    });
+    $.post('./access.php', { exid: acid }).fail(function () {});
 })
 
 $('#booth .close').on('click',function(){
     $('#booth').removeClass('active');
 })
-
-
 
 /* FSAP (False Simple Animation Protocol) */
 const fsap = {
@@ -599,13 +563,12 @@ window.addEventListener('mousemove', (event) => {
 
 function showPopup(data) {
     // console.log("POPUP:", data);
-    // ここに本物のポップアップ処理を後で書く
 }
 
 function animate() {
     requestAnimationFrame(animate);
 
-    // bana rotation
+
     bana.rotation.y += (angleToCamera - bana.rotation.y) * 0.02;
 
     // bana opacity
@@ -629,4 +592,3 @@ animate();
 
 </body>
 </html>
-

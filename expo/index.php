@@ -9,7 +9,15 @@
 
 session_start();
 include_once "../config.php";
+
+$own = $_SERVER['REQUEST_URI'];
+if (preg_match('/\/[0-9]+$/', $own)) {
+    header("Location: " . $own . "/", true, 301);
+    exit;
+}
+
 $week = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
 $categories = [];
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
@@ -19,8 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
 
 $id = $_GET['i'];
-
-$logDir = "../expo/{$id}";
+$logDir = "../que/{$id}";
 if (!is_dir($logDir)) {
     mkdir($logDir, 0755, true);
 }
@@ -33,13 +40,12 @@ $_SESSION['expoid'] = $id;
 
     $sql = "SELECT * FROM venue JOIN organizer ON venue.organizer = organizer.oid WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $id); // id が整数なら i、文字列なら s
+    $stmt->bind_param("i", $id);
     $stmt->execute();
     $result = $stmt->get_result();
 
 
 
-    // ★ ここがポイント：1回だけ fetch して判定 
     $row = $result->fetch_assoc();
 
     if (!$row) {
@@ -74,7 +80,7 @@ $_SESSION['expoid'] = $id;
         $oname = $row['oname'];
 
         if(!$background == ''){
-            $bgstyle = 'style="background-image:url(../../expo/img/'.$id.'.'.$background.')"';
+            $bgstyle = 'style="background-image:url(../../que/'.$id.'/top.webp)"';
         }
 
     }else{
@@ -94,7 +100,6 @@ $_SESSION['expoid'] = $id;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../../common/css/base.css">
     <link rel="stylesheet" type="text/css" href="../css/style.css">
-    <link rel="stylesheet" type="text/css" href="../css/expo.css">
     <meta name="description" content="<?=$description?>">
     <link rel="icon" href="../favicon.ico">
     <title><?=$name?>|3DVenue</title>
@@ -193,27 +198,29 @@ main p{
 
         <h3>Categories</h3>
         <p class="category" data-name="category" data-title="Add Category" data-subid="<?=$category?>">
-                <?php
-                $sql = "SELECT * FROM category_summary WHERE vid = $id";
-                $stmt = $conn->prepare($sql);
-                $stmt->execute();
-                $result = $stmt->get_result();
-                while ($row = $result->fetch_assoc()) {
-                    $cnt = $row['cnt'];
-                    $name = $row['name'];
-                    $cid = $row['category_id'];
-                ?>
-                <span data-cid="<?=$cid?>" data-type="edit" data-name="<?=$name?>" data-cot="<?=$cnt?>"><span class="name"><?=$name?></span></span>
-                <?php } ?>
+        <?php
+        $category_map = [];
+        $sql = "SELECT * FROM category_summary WHERE vid = $id";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        while ($row = $result->fetch_assoc()) {
+            $cnt = $row['cnt'];
+            $name = $row['name'];
+            $cid = $row['category_id'];
+            $category_map[$cid] = $name;
+        ?>
+        <span data-cid="<?=$cid?>" data-type="edit" data-name="<?=$name?>" data-cot="<?=$cnt?>"><span class="name"><?=$name?></span></span>
+        <?php } ?>
         </p>
         <h3>Benefits</h3>
-            <ul class="benefit" data-name="benefit" data-title="展示会のメリット">
-            <?php
-            foreach ($benefit_list as $b) {
-                echo "<li>" . htmlspecialchars($b, ENT_QUOTES, 'UTF-8') . "</li>";
-            }
-            ?>
-            </ul>                                    
+        <ul class="benefit" data-name="benefit" data-title="展示会のメリット">
+        <?php
+        foreach ($benefit_list as $b) {
+            echo "<li>" . htmlspecialchars($b, ENT_QUOTES, 'UTF-8') . "</li>";
+        }
+        ?>
+        </ul>                                    
     </div>
 </section>
 
@@ -222,29 +229,24 @@ main p{
     <div class="inner">
         <h2>Exhibitor List</h2>
     <div id="companies">
+    <div id="elist">
+    <?php foreach ($category_map  as $cid => $name) { ?>
+        <details>
+        <summary data-cid="<?=$cid?>"><?= $name ?></summary>
+        <p class="elist">
         <?php
-            foreach ($categories as $subid) {
-
-                $sql = "SELECT company.company AS company FROM  exhibitors JOIN company ON exhibitors.cid = company.cid WHERE vid = ? AND category = ?";
-
-                $stmt = $conn->prepare($sql);
-                $stmt->bind_param("ii", $id, $subid); // 両方int型なら "ii"
-                $stmt->execute();
-                $result = $stmt->get_result();
-                if ($result->num_rows > 0) {
-        ?>
-            <span class="category"><?=$categoryNames[$subid]?></span>
-        <?php
-             while ($row = $result->fetch_assoc()) {
-        ?>
-            <span class="cname"><?=htmlspecialchars($row['company'])?></span>
-        <?php
-               }
-             }
-          }
-        ?>
+        $sql = "SELECT * FROM exhibitors JOIN company ON exhibitors.cid = company.cid WHERE category = {$cid}";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        while ($row = $result->fetch_assoc()) { $company = $row['company']; ?>
+        <span><?=$company?></span>
+        <?php } ?>
+        </p>
+    </details>
+    <?php } ?>
     </div>
-
+    </div>
 </div>
 </section>
 </main>
@@ -294,8 +296,7 @@ $(function(){
 
     $('#venue .category').on('click',function(){
         let text = $(this).html();
-        // $('#longlist').val(text);
-    })
+   })
 
     $('#venue .benefit').on('click',function(){
         const list = $(this).find('li').map(function() {
