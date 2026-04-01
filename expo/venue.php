@@ -148,9 +148,9 @@ file_put_contents($logfile, $log, FILE_APPEND);
         </div>
 
         <div id="boothmain">
-            <h2 id="title">キャッチコピー</h2>
+            <h2 id="title">Title Copy</h2>
             <figure><img id="image" src="" alt="Image"></figure>
-            <h3 id="subtitle">サブタイトル</h3>
+            <h3 id="subtitle">Sub Title</h3>
             <div id="btnBox"><a href="" id="url" class="btn" target="_blank">Dive in</a></div>
             <div id="description">
                 <div class="boothinner">
@@ -443,7 +443,6 @@ $('#down').on('click',function(){
 
 
 $(window).on('click pointerdown', (event) => {
-
     if (event.target.id !== 'bg-canvas') return;
 
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -458,8 +457,6 @@ $(window).on('click pointerdown', (event) => {
         let cid = obj.userData.cid;
         cardSet(cid);
         controls.autoRotate = false;
-
-
         showPopup(obj.userData);
     }
 });
@@ -527,7 +524,9 @@ function tick() {
         const obj = intersects[0].object;
         fsap.to(obj.scale, { x: 1.1, y: 1.1, z: 1.1 });
         fsap.to(obj.material, { opacity: 1.0 });
+        document.body.style.cursor = 'pointer';
     } else {
+        document.body.style.cursor = 'default';
         panelMeshes.forEach(mesh => {
             fsap.to(mesh.scale, { x: 1.0, y: 1.0, z: 1.0 });
             fsap.to(mesh.material, { opacity: 0.95 });
@@ -567,25 +566,16 @@ function showPopup(data) {
 
 function animate() {
     requestAnimationFrame(animate);
-
-
     bana.rotation.y += (angleToCamera - bana.rotation.y) * 0.02;
-
-    // bana opacity
     if (bana.material.opacity < 1.0) {
         bana.material.opacity += (1.0 - bana.material.opacity) * 0.01;
     }
-    // ------------------------
-
     controls.target.y = camera.position.y;
     camera.position.y = Math.max(camera.position.y, 0);
     controls.update();
     renderer.render(scene, camera);
 }
-
 animate();
-
-
 
 }) // jquery
 </script>
