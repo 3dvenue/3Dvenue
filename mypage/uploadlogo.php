@@ -11,29 +11,31 @@ include_once "auth.php";
 $vid = $_SESSION['vid'] ?? 0;
 $cid = $login_id;
 
-if (isset($_POST['image'])){
+if (isset($_POST['image'])) {
     $imgData = $_POST['image'];
     $imgData = preg_replace('/^data:image\/png;base64,/', '', $imgData);
-    $imgData = base64_decode($imgData);
+    $imgData = base64_decode(str_replace(' ', '+', $imgData));
 
-    $tmpFile = tempnam(sys_get_temp_dir(), 'domimg_');
-    file_put_contents($tmpFile, $imgData);
-
-    $image = imagecreatefrompng($tmpFile);
+    $image = imagecreatefromstring($imgData);
+    
     if (!$image) {
         http_response_code(500);
-        exit("Failed to Load Images.");
+        exit("Could not load image.");
     }
 
-    $dir = "../expo/$vid";
+    imagealphablending($image, false);
+    imagesavealpha($image, true);
+
+    $dir = "../que/$vid";
     if (!is_dir($dir)) {
         mkdir($dir, 0755, true);
     }
 
-    $filePath = "$dir/$cid.jpg";
-    if (imagejpeg($image, $filePath, 85)) {
-        echo "Uploaded successfully: $cid.jpg";
-    } else {
+    $filePath = "$dir/$cid.webp";
+
+    if (imagewebp($image, $filePath, 85)) {
+        echo "Upload Success.: $cid.webp";
+     } else {
         http_response_code(500);
         echo "Upload failed.";
     }

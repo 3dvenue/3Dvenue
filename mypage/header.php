@@ -12,7 +12,7 @@ require_once('auth.php');
 <header>
     <div class="inner">
         <h1 id="head">3DVenue</h1>
-        <div><?=$company?>　MyPage</div>
+        <div><?=$company?>	MyPage</div>
     </div>
 </header>
 <nav>

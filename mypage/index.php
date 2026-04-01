@@ -28,9 +28,6 @@ $company_array = $result->fetch_all(MYSQLI_ASSOC);
     <link rel="stylesheet" type="text/css" href="./css/index.css">
     <link rel="icon" href="../favicon.ico">
     <title>Exhibitors MyPage</title>
-<style type="text/css">
-</style>
-
 </head>
 <body class="top">
 <?php include_once 'header.php'; ?>
@@ -88,7 +85,7 @@ if(empty($company)){
 
         $set = !empty($row['exid']) ? "set" : "";
         $matched_id = $row['exid'] ?? "";
-        $bana = "../expo/img/bana{$id}.png?t=".time();
+        $bana = "../que/{$id}/bana.webp?t=".time();
       ?>
         <div class="venue <?=$set?>">
             <div class="flex"><figure style="background-image:url(<?=$bana?>)" data-id="<?=$id?>"></figure></div>
@@ -121,6 +118,11 @@ if(empty($company)){
             $('#view').addClass('active');
             let url = '../expo/'+id+'/';
             $('#view iframe').attr('src',url);
+        })
+
+        $('#view #close').on('click',function(){
+            $('#view').removeClass('active');
+            $('#view iframe').attr('src','');
         })
 
     })

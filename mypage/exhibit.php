@@ -36,12 +36,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	    exit;
 	}
 
-		$title = $_POST['title'] ?? null;
-		$subtitle = $_POST['subtitle'] ?? null;
-		$description = $_POST['description'] ?? null;
-		$category = $_POST['category'] ?? 0;
-		$url = $_POST['url'] ?? null;
-		$telno = $_POST['telno'] ?? null;
+	$title = mysqli_real_escape_string($conn, $_POST['title'] ?? '');
+	$subtitle = mysqli_real_escape_string($conn, $_POST['subtitle'] ?? '');
+	$description = mysqli_real_escape_string($conn, $_POST['description'] ?? '');
+	$category = mysqli_real_escape_string($conn, $_POST['category'] ?? 0);
+	$url = mysqli_real_escape_string($conn, $_POST['url'] ?? '');
+	$telno = mysqli_real_escape_string($conn, $_POST['telno'] ?? '');
 
 	if($submit == "add"){
 
@@ -61,6 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	}
 
 
+$logoimage = "../logo/".$cid.'.webp?t='.time();
 }
 
 ?>
@@ -81,11 +82,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php include_once 'header.php'; ?>
 <main>
 <?php
-$mycard = "../expo/{$vid}/{$cid}.jpg";
+$mycard = "../que/".$vid."/".$cid.".webp";
 $mypath = "";
-$path = __DIR__ . "/" . $mycard;
+$path = $mycard;
 if (file_exists($path)) {
-$mypath = "card";
+	$mypath = "card";
 }
 
 $title ?? null;
@@ -152,10 +153,14 @@ while ($row = $result->fetch_assoc()) {
  } 
 ?>
 
-<!-- <h3>出展情報</h3> -->
+
 <section id="venue-card" class="<?=$mypath?>">
 	<h3>Exhibition Card</h3>
-<img src="<?=$mycard?>?t=<?=time()?>" alt="Exhibition Card" />
+<?php 
+	if($mypath == "card"){
+?> 
+<img src="<?=$mycard?>?t=<?=time()?>" alt="出展カード" />
+<?php } ?>
 </section>
 
 <section id="makecard" class="<?=$mypath?>">
@@ -553,7 +558,7 @@ $(function(){
 
 	// Check card view
 	function cardReset(){
-		$('#mycard').css({'background-image': 'url("../expo/<?= $vid ?>/<?= $cid ?>.jpg")'});
+		$('#mycard').css({'background-image': 'url("../que/<?= $vid ?>/<?= $cid ?>.webp")'});
 		$('#logoimage,#companyname').addClass('hidden');
 	}
 

@@ -8,8 +8,11 @@
 */
 
 session_start();
-$_SESSION = array();
-session_destroy();
-header("Location: /");
+unset($_SESSION['login_email']);
+unset($_SESSION['login_id']);
+unset($_SESSION['login_uuid']);
+unset($_SESSION['company']);
+
+header("Location: ../login.php");
 exit;
 ?>
