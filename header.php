@@ -16,7 +16,6 @@
 			<ul>
 				<li><a href="./about.php">About</a></li>
 				<li><a href="./expo.php">Expo</a></li>
-				<li><a href="./download.php">Download</a></li>
 				<li><a href="./login.php">login</a></li>
 			</ul>
 		</nav>
