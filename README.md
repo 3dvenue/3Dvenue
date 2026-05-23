@@ -2,6 +2,7 @@
 
 * English (Current)
 * [Japanese version](https://github.com/3dvenue/3Dvenue-mit-jp) - for Japanese users
+* NEW [3Dvenue-CMS version0.9.6-beta](https://github.com/3dvenue/3Dvenue-CMS) - Multilingual Support
 
 ###  1. Our Mission | コンセプト
 
@@ -14,6 +15,10 @@
   **3Dvenue** is not just a name for technology. It is a "shared plaza" where humanity truly masters digital power to deliver dreams to the world.
 
   **3Dvenue**とは、単なる技術の名称ではない。それは、人類がデジタルの力を真に使いこなし、夢を世界へ届けるための「共通の広場」である。
+
+  3Dvenueは、このコンセプトを実現するための、MITライセンス全体のブランドであり、展示会開催とか展示ブースの構築などは、その全体の一部分である。
+  現在3Dvenue-CMSのbetaバージョンを公開中で、こちらは、展示会開催システムのターゲットとなるホームページ側を制作するためのGUI付のHTMLエディターである。
+  このCMSにはいわゆるバーチャル空間の設計とは無関係に開発されており、PageSpeed Insightsで高得点を目指すために全力を注いでいるCMSで、ドメインやディレクトリを選ばす、FTPでどこにでも設置が可能な機能を有している。
 
 ---
 
