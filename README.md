@@ -2,7 +2,7 @@
 
 * English (Current)
 * [Japanese version](https://github.com/3dvenue/3Dvenue-mit-jp) - for Japanese users
-* NEW [3Dvenue-CMS version0.9.6-beta](https://github.com/3dvenue/3Dvenue-CMS) - Multilingual Support
+* NEW [3Dvenue-CMS version0.9.9-beta](https://github.com/3dvenue/3Dvenue-CMS) - Multilingual Support
 
 ###  1. Our Mission | コンセプト
 
